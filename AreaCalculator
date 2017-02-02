@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+#
+# AreaCalculator -- Menghitung luas dari tiap fitur (asumsi poligon) yang ada.
+# meskipun dibikin se-dinamis mungkin, masih ada asumsi bahwa input merupakan sebuah file shp.. 
+
+from osgeo import ogr
+import sys
+
+if len(sys.argv) < 2:
+	print "usage: AreaCalculator [input] [output]"
+	print sys.argv
+	sys.exit(1)
+
+inputPolygon = sys.argv[1]
+outputPolygon = inputPolygon.split(".")[0] + "_area.shp"
+
+if len(sys.argv) > 2:
+	outputPolygon = sys.argv[2]
+
+fieldName = "Area"
+fieldType = ogr.OFTReal
+fieldWidth = 20
+fieldPrecision = 3
+
+dsin = ogr.Open(inputPolygon)
+dsout = dsin.GetDriver().CopyDataSource(dsin, outputPolygon)
+
+ly = dsout.GetLayer(0)
+fieldDef = ogr.FieldDefn(fieldName,fieldType)
+
+fieldDef.SetWidth(fieldWidth)
+fieldDef.SetPrecision(fieldPrecision)
+ly.CreateField(fieldDef)
+
+for i in range(ly.GetFeatureCount()):
+	feature = ly.GetFeature(i)
+	geom = feature.GetGeometryRef()
+	area = geom.GetArea()
+	feature.SetField(fieldName, area)
+	ly.SetFeature(feature)
+
+dsin.Destroy()
+dsout.Destroy()
+	
+
+
+
