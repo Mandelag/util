@@ -7,10 +7,14 @@ Generally, you want to specify small chunk size if most of the feature sizes are
 This program will download the whole layer if the number of features in the layer < chunk size.
 This utility is inspired by https://github.com/tannerjt/AGStoShapefile
 
+
+This script will work if only the MapServer query supports GeoJSON.
+
+
 ### How to run the code
 
 1. Install Python 2.7
-    1. Install python 2.7
+    1. Install Python 2.7
     2. Make sure you can run `python` in your command line terminal
   
 2. Install `requests` library (http://python-requests.org/)
@@ -23,7 +27,10 @@ This utility is inspired by https://github.com/tannerjt/AGStoShapefile
 
 ### Example Usage
 
-`python downloader.py http://gis.dukcapil.kemendagri.go.id/arcgis/rest/services/SampleWorldCities/MapServer/0 50`
+```
+python downloader.py http://gis.dukcapil.kemendagri.go.id/arcgis/rest/services/SampleWorldCities/MapServer/0 50
+python downloader.py https://portal.ina-sdi.or.id/arcgis/rest/services/KOTABOGOR/JalurAngkot/MapServer/0/ 100
+```
 
 
 ### Optional
@@ -34,3 +41,9 @@ You can download GDAL/OGR tools here: https://trac.osgeo.org/gdal/wiki/Downloadi
 
 For more information, please visit http://mandelag.com
 
+
+### Alternatives
+
+https://github.com/esri/terraformer
+
+https://github.com/tannerjt/AGStoShapefile
