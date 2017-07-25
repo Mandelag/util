@@ -1,7 +1,6 @@
 ## ArcGIS MapServer Layer Downloader
 
 This program will download the MapServer layer as chunks of separate GeoJSON files.
-Chunks refers to the number of feature(s) we want to download at each request.
 We download it this way so that the map server is not overwhelmed by our requests.
 Generally, you want to specify small chunk size if most of the feature sizes are big.
 This program will download the whole layer if the number of features in the layer < chunk size.
@@ -23,6 +22,7 @@ This script will work if only the MapServer query supports GeoJSON.
 3. Run `python downloader.py [MapServer Layer URL] [chunk size]` in your command line terminal
 
 4. The result will be stored in a folder named `[MapServer Name]_[Layer Id]`
+    - Chunks refers to the number of feature(s) we want to download at each request.
  
 
 ### Example Usage
