@@ -20,11 +20,11 @@ This script will work if only the MapServer query supports GeoJSON.
     1. Type `pip requests` in your command line terminal
   
 3. Run `python downloader.py [MapServer Layer URL] [chunk size]` in your command line terminal
-
-4. The result will be stored in a folder named `[MapServer Name]_[Layer Id]`
-    - Chunks refers to the number of feature(s) we want to download at each request.
+    - Chunk size refers to the number of feature(s) we want to download at each request.
  
-
+4. The result will be stored in a folder named `[MapServer Name]_[Layer Id]`
+ 
+ 
 ### Example Usage
 
 ```
