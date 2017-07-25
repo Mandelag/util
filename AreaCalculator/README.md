@@ -1,0 +1,1 @@
+Calculate area of each features in a polygon layer.

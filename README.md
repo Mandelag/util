@@ -1,1 +1,1 @@
-Many utility scripts/programs for my self.
+Collection of utility scripts/programs I've created.
