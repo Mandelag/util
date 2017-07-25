@@ -28,7 +28,7 @@ This script will work if only the MapServer query supports GeoJSON.
 ### Example Usage
 
 ```
-python downloader.py http://gis.dukcapil.kemendagri.go.id/arcgis/rest/services/SampleWorldCities/MapServer/0 50
+python downloader.py http://gis.dukcapil.kemendagri.go.id/arcgis/rest/services/SampleWorldCities/MapServer/0/ 50
 python downloader.py https://portal.ina-sdi.or.id/arcgis/rest/services/KOTABOGOR/JalurAngkot/MapServer/0/ 100
 ```
 
