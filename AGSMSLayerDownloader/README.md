@@ -17,7 +17,7 @@ This script will work if only the MapServer query supports GeoJSON.
     2. Make sure you can run `python` in your command line terminal
   
 2. Install `requests` library (http://python-requests.org/)
-    1. Type `pip requests` in your command line terminal
+    1. Type `pip install requests` in your command line terminal
   
 3. Run `python downloader.py [MapServer Layer URL] [chunk size]` in your command line terminal
     - Chunk size refers to the number of feature(s) we want to download at each request.
@@ -34,7 +34,8 @@ python downloader.py https://portal.ina-sdi.or.id/arcgis/rest/services/KOTABOGOR
 
 ### Optional
 
-If you want to merge the separate GeoJSON files, use GDAL/OGR's `ogr2ogr` tool.
+If you want to merge the separate GeoJSON files, use GDAL/OGR's `ogr2ogr` tool. For example, in Windows system, in the same folder as the downloaded files, run the script:
+`for %%f in (*.geojson) do ogr2ogr -append [output_merged_file] %%f`
 
 You can download GDAL/OGR tools here: https://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries
 
