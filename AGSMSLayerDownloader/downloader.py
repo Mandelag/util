@@ -17,7 +17,7 @@ def download(mapservice_layer_url, CHUNK_SIZE=5):
         "f": "geojson" #or "pjson"
     }
     print "Requesting Ids.."
-    r = requests.get(mapservice_layer_url, params=params)
+    r = requests.post(mapservice_layer_url, params=params)
     
     ids = r.json()["objectIds"]
     ids.sort()
@@ -49,7 +49,7 @@ def getFeaturesByIds(url, ids):
         "outFields": "*",
         "f": "geojson" #or "pjson"
     }
-    r = requests.get(url, params=params)
+    r = requests.post(url, params=params)
     return r.content
 
 if __name__ == "__main__":
