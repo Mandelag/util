@@ -1,6 +1,6 @@
-import requests, os, sys
+import requests, os, sys, shutil
 
-def download(mapservice_layer_url, CHUNK_SIZE=5):
+def download(mapservice_layer_url, CHUNK_SIZE=50):
     """ Download MapService layer as chunks of separated GeoJSON file(s).
         Chunks refers to the number of feature(s) we want to download at each request.
         We download it this way so that the server is not overwhelmed by our requests.
@@ -25,11 +25,11 @@ def download(mapservice_layer_url, CHUNK_SIZE=5):
     i = 0
     
     try:
-        print "Creating directory: "+outname
-        os.makedirs(outname)
-    except OSError as e:
-        print "Please delete the existing directory: "+outname
-        raise
+        shutil.rmtree(outname)
+    except:
+        pass
+    print "Creating directory: "+outname
+    os.makedirs(outname)
 
     print "Download chunks of features with CHUNK_SIZE = "+str(CHUNK_SIZE)
     while i <= int(len(ids)/CHUNK_SIZE):
@@ -53,11 +53,14 @@ def getFeaturesByIds(url, ids):
     return r.content
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print "Usage: \n    python downloader.py [Map Service Layer URL] [Chunk size]"
+    if len(sys.argv) > 2:
+        download(sys.argv[1], int(sys.argv[2]))    
+    elif len(sys.argv) > 1:
+        download(sys.argv[1])
+    else:
+        print "Usage: \n    python downloader.py [Map Service Layer URL] [Chunk size]\n    Chunk size -> feature downloaded on each request."
         exit()
-    download(sys.argv[1], int(sys.argv[2]))
-      
+
     
 
 
