@@ -8,7 +8,7 @@ def download(mapservice_layer_url, CHUNK_SIZE=50):
         Downloads the whole layer if the number of features in the layer < than the chunk size.
     """
     token = mapservice_layer_url.split("/")
-    outname = token[6] + "_" + str(token[8])  # output file name
+    outname = token[-3] + "_" + str(token[-1])  # output file name
     
     mapservice_layer_url = mapservice_layer_url + "/query"
     params = {
