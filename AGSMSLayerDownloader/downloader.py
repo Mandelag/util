@@ -1,4 +1,4 @@
-import requests, os, sys, shutil
+import requests, os, sys, shutil, time
 
 def download(mapservice_layer_url, CHUNK_SIZE=50):
     """ Download MapService layer as chunks of separated GeoJSON file(s).
@@ -14,7 +14,7 @@ def download(mapservice_layer_url, CHUNK_SIZE=50):
     params = {
         "where": "1=1", 
         "returnIdsOnly": "true",
-        "f": "geojson" #or "pjson"
+        "f": "json" #or "pjson" //sebaiknya json
     }
     print "Requesting Ids.."
     r = requests.post(mapservice_layer_url, params=params)
@@ -33,13 +33,18 @@ def download(mapservice_layer_url, CHUNK_SIZE=50):
 
     print "Download chunks of features with CHUNK_SIZE = "+str(CHUNK_SIZE)
     while i <= int(len(ids)/CHUNK_SIZE):
-        print "Processing "+str(i+1)+"/"+str(int(len(ids)/CHUNK_SIZE)+1)+" chunks"
-        subIds = ids[i*CHUNK_SIZE:(i+1)*CHUNK_SIZE]
-        chunkIds = ",".join(map(str, subIds))
-        
-        with open(outname+"/"+outname+"_"+str(i)+".geojson", "w") as f:
-            f.write(getFeaturesByIds(mapservice_layer_url, chunkIds))
-        i+=1
+        try:
+            print "Processing "+str(i+1)+"/"+str(int(len(ids)/CHUNK_SIZE)+1)+" chunks"
+            subIds = ids[i*CHUNK_SIZE:(i+1)*CHUNK_SIZE]
+            chunkIds = ",".join(map(str, subIds))
+            with open(outname+"/"+outname+"_"+str(i)+".geojson", "w") as f:
+                result = getFeaturesByIds(mapservice_layer_url, chunkIds)
+                f.write(result)
+            i+=1
+        except Exception as e:
+            print("Exception.. retrying in 30 seconds.."+str(e))
+            #raise Exception(e)
+            time.sleep(30)
     print "DONE."
 
 def getFeaturesByIds(url, ids):
@@ -47,7 +52,7 @@ def getFeaturesByIds(url, ids):
     params = {
         "objectIds": ids,
         "outFields": "*",
-        "f": "geojson" #or "pjson"
+        "f": "json" #or "pjson"
     }
     r = requests.post(url, params=params)
     return r.content
