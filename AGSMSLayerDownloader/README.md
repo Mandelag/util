@@ -35,7 +35,9 @@ python downloader.py https://portal.ina-sdi.or.id/arcgis/rest/services/KOTABOGOR
 ### Optional
 
 If you want to merge the separate GeoJSON files, use GDAL/OGR's `ogr2ogr` tool. For example, in Windows system, in the same folder as the downloaded files, run the script:
-`for %%f in (*.geojson) do ogr2ogr -append [output_merged_file] %%f`
+`for %f in (*.geojson) do ogr2ogr -f [gdal_driver_format] -append [output_merged_file] %f`
+eg. 
+`for %f in (*.geojson) do ogr2ogr -f "ESRI Shapefile" -append output.shp %f`
 
 You can download GDAL/OGR tools here: https://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries
 
