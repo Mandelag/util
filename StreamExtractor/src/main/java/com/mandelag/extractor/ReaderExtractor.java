@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mandelag.extractor;
 
 import java.util.function.Consumer;
 
 /**
  *
- * @author Keenan Gebze (@mandelag) */
+ * @author Keenan Gebze (@mandelag)
+ */
 public class ReaderExtractor {
     
     private String startString;
@@ -25,9 +21,9 @@ public class ReaderExtractor {
         this.callback = callback;
     }
 
-    public void listen(char a) { 
+    public void listen(char a) {
         if(!extractMode) {
-            if (a == startString.charAt(cursor)) {
+            if (a == startString.codePointAt(cursor)) {
                 cursor++;
                 if (cursor == startString.length()) {
                     extractMode = true;
@@ -38,7 +34,7 @@ public class ReaderExtractor {
             }
         } else {
             buffer.append(a);
-            if (a == stopString.charAt(cursor)) {
+            if (a == stopString.codePointAt(cursor)) {
                 cursor++;
                 if (cursor == stopString.length()) {
                     extractMode = false;
