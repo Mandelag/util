@@ -6,7 +6,7 @@ import java.util.function.Consumer;
  *
  * @author Keenan Gebze (@mandelag)
  */
-public class ReaderExtractor {
+public class ExtractorMarker {
     
     private String startString;
     private String stopString;
@@ -15,13 +15,13 @@ public class ReaderExtractor {
     private boolean extractMode = false;
     private StringBuffer buffer = new StringBuffer();
     
-    public ReaderExtractor(String start, String stop, Consumer<String> callback) {
+    public ExtractorMarker(String start, String stop, Consumer<String> callback) {
         this.startString = start;
         this.stopString = stop;
         this.callback = callback;
     }
 
-    public void listen(char a) {
+    void listen(char a) {
         if(!extractMode) {
             if (a == startString.codePointAt(cursor)) {
                 cursor++;

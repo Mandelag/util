@@ -13,23 +13,20 @@ import java.util.logging.Logger;
  */
 public class ReaderExtractorDemo {
     public static void main(String[] args) {
-        ReaderExtractor namaExtract = new ReaderExtractor("Nama : ", "</font>", System.out::println);
-        ReaderExtractor alamatExtract = new ReaderExtractor("Alamat : ", "</font>", System.out::println);
-        ReaderExtractor desaKelExtract = new ReaderExtractor("Desa/Kelurahan : ", "</font>", System.out::println);
-        ReaderExtractor urlFotoExtract = new ReaderExtractor("Foto : <img src=\"", "\" width=\"50px\"", System.out::println);
-        ReaderExtractor latlonExtract = new ReaderExtractor("\t\tvar marker = L.marker(L.latLng(", "),{icon:", System.out::println);
+        ExtractorMarker namaExtract = new ExtractorMarker("Nama : ", "</font>", System.out::println);
+        ExtractorMarker alamatExtract = new ExtractorMarker("Alamat : ", "</font>", System.out::println);
+        ExtractorMarker desaKelExtract = new ExtractorMarker("Desa/Kelurahan : ", "</font>", System.out::println);
+        ExtractorMarker urlFotoExtract = new ExtractorMarker("Foto : <img src=\"", "\" width=\"50px\"", System.out::println);
+        ExtractorMarker latlonExtract = new ExtractorMarker("\t\tvar marker = L.marker(L.latLng(", "),{icon:", System.out::println);
         
         try (Reader r = new InputStreamReader( new FileInputStream("C:\\050000.SD"), "UTF8")) {
-            int read;
-            char readChar;
-            while ((read = r.read() ) >= 0) {
-                readChar = (char) read;
-                namaExtract.listen(readChar);
-                alamatExtract.listen(readChar);
-                desaKelExtract.listen(readChar);
-                urlFotoExtract.listen(readChar);
-                latlonExtract.listen(readChar);
-            }
+            Extractor extractor = new Extractor(r)
+                    .addMarker(namaExtract)
+                    .addMarker(alamatExtract)
+                    .addMarker(desaKelExtract)
+                    .addMarker(urlFotoExtract)
+                    .addMarker(latlonExtract);
+            extractor.extract();
         } catch (IOException ex) {
             Logger.getLogger(ReaderExtractorDemo.class.getName()).log(Level.SEVERE, null, ex);
         } 
