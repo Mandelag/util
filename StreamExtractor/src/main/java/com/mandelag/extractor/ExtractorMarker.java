@@ -21,7 +21,7 @@ public class ExtractorMarker {
         this.callback = callback;
     }
 
-    void listen(char a) {
+    public void listen(char a) {
         if(!extractMode) {
             if (a == startString.codePointAt(cursor)) {
                 cursor++;

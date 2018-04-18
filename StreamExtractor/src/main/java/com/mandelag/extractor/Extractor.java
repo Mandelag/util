@@ -11,11 +11,13 @@ import java.util.ArrayList;
 public class Extractor {
     
     private Reader reader;
-    private ArrayList<ExtractorMarker> markers;
+    private ExtractorMarker[] markers = new ExtractorMarker[0];
     
-    public Extractor(Reader r) {
+    public Extractor(Reader r, ExtractorMarker[] markers) {
         this.reader = r;
-        this.markers = new ArrayList<>();
+        if (markers != null) {
+            this.markers = markers;
+        }
     }
     
     public void extract() throws IOException {
@@ -23,15 +25,9 @@ public class Extractor {
         char readChar;
         while ((read = reader.read() ) >= 0) {
             readChar = (char) read;
-            for ( ExtractorMarker marker : markers) {
-                marker.listen(readChar);
+            for (int x=0; x < markers.length; x++ ) {
+                markers[x].listen(readChar);
             }
         }
     }
-    
-    public Extractor addMarker(ExtractorMarker marker) {
-        this.markers.add(marker);
-        return this;
-    }
-    
 }
