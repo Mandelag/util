@@ -10,14 +10,14 @@ import java.util.function.Consumer;
  */
 public class InputStreamMarker {
     
-    private byte[] startBytes;
-    private byte[] stopBytes;
+    private int[] startBytes;
+    private int[] stopBytes;
     private Consumer<byte[]> callback;
     private int cursor = 0;
     private boolean extractMode = false;
-    private ByteArrayOutputStream buffer;
+    private ByteArrayOutputStream buffer = new ByteArrayOutputStream(1024);
     
-    public InputStreamMarker(byte[] start, byte[] stop, Consumer<byte[]> callback) {
+    public InputStreamMarker(int[] start, int[] stop, Consumer<byte[]> callback) {
         this.startBytes = start;
         this.stopBytes = stop;
         this.callback = callback;
