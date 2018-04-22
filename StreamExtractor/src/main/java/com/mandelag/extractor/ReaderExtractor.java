@@ -10,9 +10,9 @@ import java.io.Reader;
 public class ReaderExtractor {
     
     private Reader reader;
-    private ExtractorMarker[] markers = new ExtractorMarker[0];
+    private ReaderMarker[] markers = new ReaderMarker[0];
     
-    public ReaderExtractor(Reader r, ExtractorMarker[] markers) {
+    public ReaderExtractor(Reader r, ReaderMarker[] markers) {
         this.reader = r;
         if (markers != null) {
             this.markers = markers;

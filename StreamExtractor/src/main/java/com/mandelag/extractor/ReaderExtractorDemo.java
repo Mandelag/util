@@ -16,15 +16,14 @@ import java.util.logging.Logger;
  */
 public class ReaderExtractorDemo {
     public static void main(String[] args) {
-        ExtractorMarker namaExtract = new ExtractorMarker("Nama : ", "</font>", System.out::println);
-        ExtractorMarker alamatExtract = new ExtractorMarker("Alamat : ", "</font>", System.out::println);
-        ExtractorMarker desaKelExtract = new ExtractorMarker("Desa/Kelurahan : ", "</font>", System.out::println);
-        ExtractorMarker urlFotoExtract = new ExtractorMarker("Foto : <img src=\"", "\" width=\"50px\"", System.out::println);
-        ExtractorMarker latlonExtract = new ExtractorMarker("\t\tvar marker = L.marker(L.latLng(", "),{icon:", (System.out::println));
+        ReaderMarker namaExtract = new ReaderMarker("Nama : ", "</font>", System.out::println);
+        ReaderMarker alamatExtract = new ReaderMarker("Alamat : ", "</font>", System.out::println);
+        ReaderMarker desaKelExtract = new ReaderMarker("Desa/Kelurahan : ", "</font>", System.out::println);
+        ReaderMarker urlFotoExtract = new ReaderMarker("Foto : <img src=\"", "\" width=\"50px\"", System.out::println);
+        ReaderMarker latlonExtract = new ReaderMarker("\t\tvar marker = L.marker(L.latLng(", "),{icon:", (System.out::println));
         long t = System.currentTimeMillis();
         try (Reader r = new BufferedReader(new InputStreamReader( new FileInputStream("C:\\050000.SD"), "UTF8"))) {
-        //try(Reader r = new FileReader("C:\\050000.SD")){
-            ReaderExtractor extractor = new ReaderExtractor(r, new ExtractorMarker[]{namaExtract, alamatExtract, desaKelExtract, urlFotoExtract, latlonExtract});            
+            ReaderExtractor extractor = new ReaderExtractor(r, new ReaderMarker[]{namaExtract, alamatExtract, desaKelExtract, urlFotoExtract, latlonExtract});            
             extractor.extract();
         } catch (IOException ex) {
             Logger.getLogger(ReaderExtractorDemo.class.getName()).log(Level.SEVERE, null, ex);

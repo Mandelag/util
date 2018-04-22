@@ -6,7 +6,7 @@ import java.util.function.Consumer;
  *
  * @author Keenan Gebze (@mandelag)
  */
-public class ExtractorMarker {
+public class ReaderMarker {
     
     private String startString;
     private String stopString;
@@ -15,7 +15,7 @@ public class ExtractorMarker {
     private boolean extractMode = false;
     private StringBuffer buffer = new StringBuffer();
     
-    public ExtractorMarker(String start, String stop, Consumer<String> callback) {
+    public ReaderMarker(String start, String stop, Consumer<String> callback) {
         this.startString = start;
         this.stopString = stop;
         this.callback = callback;
