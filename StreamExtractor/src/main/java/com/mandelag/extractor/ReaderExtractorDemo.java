@@ -24,7 +24,7 @@ public class ReaderExtractorDemo {
         long t = System.currentTimeMillis();
         try (Reader r = new BufferedReader(new InputStreamReader( new FileInputStream("C:\\050000.SD"), "UTF8"))) {
         //try(Reader r = new FileReader("C:\\050000.SD")){
-            Extractor extractor = new Extractor(r, new ExtractorMarker[]{namaExtract, alamatExtract, desaKelExtract, urlFotoExtract, latlonExtract});            
+            ReaderExtractor extractor = new ReaderExtractor(r, new ExtractorMarker[]{namaExtract, alamatExtract, desaKelExtract, urlFotoExtract, latlonExtract});            
             extractor.extract();
         } catch (IOException ex) {
             Logger.getLogger(ReaderExtractorDemo.class.getName()).log(Level.SEVERE, null, ex);

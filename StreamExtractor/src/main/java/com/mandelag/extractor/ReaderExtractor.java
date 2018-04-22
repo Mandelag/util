@@ -2,18 +2,17 @@ package com.mandelag.extractor;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
 
 /**
  *
  * @author Keenan
  */
-public class Extractor {
+public class ReaderExtractor {
     
     private Reader reader;
     private ExtractorMarker[] markers = new ExtractorMarker[0];
     
-    public Extractor(Reader r, ExtractorMarker[] markers) {
+    public ReaderExtractor(Reader r, ExtractorMarker[] markers) {
         this.reader = r;
         if (markers != null) {
             this.markers = markers;
