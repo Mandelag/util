@@ -1,7 +1,7 @@
 import requests, os, sys, shutil, time
 
-def download(mapservice_layer_url, CHUNK_SIZE=50):
-    """ Download MapService layer as chunks of separated GeoJSON file(s).
+def download(mapservice_layer_url, CHUNK_SIZE=50, OFFSET=0):
+    """ Download MapService layer as chunks of separated EsriJSON file(s).
         Chunks refers to the number of feature(s) we want to download at each request.
         We download it this way so that the server is not overwhelmed by our requests.
         Generally, you want to specify small CHUNK_SIZE if most of the features size in the layer is big.
@@ -17,7 +17,7 @@ def download(mapservice_layer_url, CHUNK_SIZE=50):
     params = {
         "where": "1=1",
         "returnIdsOnly": "true",
-        "f": "json" #or "pjson" //sebaiknya json
+        "f": "json"
     }
     print "Requesting Ids.."
     r = requests.post(mapservice_layer_url, params=params)
@@ -25,7 +25,7 @@ def download(mapservice_layer_url, CHUNK_SIZE=50):
     ids = r.json()["objectIds"]
     ids.sort()
     print "Features length: "+ str(len(ids))
-    i = 0
+    i = OFFSET
 
     try:
         shutil.rmtree(outname)
@@ -55,13 +55,15 @@ def getFeaturesByIds(url, ids):
     params = {
         "objectIds": ids,
         "outFields": "*",
-        "f": "json" #or "pjson"
+        "f": "json"
     }
     r = requests.post(url, params=params)
     return r.content
 
 if __name__ == "__main__":
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 3:
+        download(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]))
+    elif len(sys.argv) > 2:
         download(sys.argv[1], int(sys.argv[2]))
     elif len(sys.argv) > 1:
         download(sys.argv[1])
