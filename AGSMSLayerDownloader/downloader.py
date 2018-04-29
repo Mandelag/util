@@ -7,23 +7,26 @@ def download(mapservice_layer_url, CHUNK_SIZE=50):
         Generally, you want to specify small CHUNK_SIZE if most of the features size in the layer is big.
         Downloads the whole layer if the number of features in the layer < than the chunk size.
     """
+    print(mapservice_layer_url.strip()[-1])
+    if mapservice_layer_url.strip()[-1] == "/":
+        mapservice_layer_url = mapservice_layer_url[:-1]
     token = mapservice_layer_url.split("/")
     outname = token[-3] + "_" + str(token[-1])  # output file name
-    
+
     mapservice_layer_url = mapservice_layer_url + "/query"
     params = {
-        "where": "1=1", 
+        "where": "1=1",
         "returnIdsOnly": "true",
         "f": "json" #or "pjson" //sebaiknya json
     }
     print "Requesting Ids.."
     r = requests.post(mapservice_layer_url, params=params)
-    
+
     ids = r.json()["objectIds"]
     ids.sort()
     print "Features length: "+ str(len(ids))
     i = 0
-    
+
     try:
         shutil.rmtree(outname)
     except:
@@ -59,13 +62,13 @@ def getFeaturesByIds(url, ids):
 
 if __name__ == "__main__":
     if len(sys.argv) > 2:
-        download(sys.argv[1], int(sys.argv[2]))    
+        download(sys.argv[1], int(sys.argv[2]))
     elif len(sys.argv) > 1:
         download(sys.argv[1])
     else:
         print "Usage: \n    python downloader.py [Map Service Layer URL] [Chunk size]\n    Chunk size -> feature downloaded on each request."
         exit()
 
-    
+
 
 
