@@ -40,7 +40,7 @@ def download(mapservice_layer_url, CHUNK_SIZE=50, OFFSET=0):
             print "Processing "+str(i+1)+"/"+str(int(len(ids)/CHUNK_SIZE)+1)+" chunks"
             subIds = ids[i*CHUNK_SIZE:(i+1)*CHUNK_SIZE]
             chunkIds = ",".join(map(str, subIds))
-            with open(outname+"/"+outname+"_"+str(i)+".geojson", "w") as f:
+            with open(outname+"/"+outname+"_"+str(i)+".json", "w") as f:
                 result = getFeaturesByIds(mapservice_layer_url, chunkIds)
                 f.write(result)
             i+=1
