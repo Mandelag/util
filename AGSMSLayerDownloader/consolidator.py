@@ -15,7 +15,6 @@ def consolidate(directory, output, output_name):
     features = {}
     counter = 0
     group = 0
-    #pdb.set_trace()
     once = True;
     for filename in files:
         file_full_name = os.path.join(inputdir, filename)
@@ -28,14 +27,18 @@ def consolidate(directory, output, output_name):
             else:
                 features["features"].extend(json.load(input)["features"])
         counter = counter + 1;
+        output_lists = []
         if counter >= 500:
             group = group + 1
-            with open(output_name+"_"+str(group), "w+") as outputfile:
+            output_name = output_name+"_"+str(group)+".json"
+            with open(output_name, "w+") as outputfile:
                 outputfile.write(json.dumps(features))
+                output_lists.append(output_name)
             counter = 0
             features = {}
             once = True
-    
+        print(output_name)
+
 if __name__ == "__main__":
     if len(sys.argv) > 3:
         consolidate(sys.argv[1], sys.argv[2], sys.argv[3])
