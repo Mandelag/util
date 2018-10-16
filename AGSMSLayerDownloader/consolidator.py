@@ -1,7 +1,4 @@
-import  os
-import sys
-import arcpy
-import json
+import os, sys, arcpy, json
 
 def consolidate(directory, output, output_name):
     #import pdb
@@ -43,7 +40,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 3:
         consolidate(sys.argv[1], sys.argv[2], sys.argv[3])
     else:
-        print "Usage: \n    python consolidator.py [input_folder] [output_folder] [output_name]"
+        print("Usage: \n    python consolidator.py [input_folder] [output_folder] [output_name]")
         exit()
 
 

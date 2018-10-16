@@ -1,4 +1,4 @@
-import requests, os, sys, shutil, time
+import requests, os, sys, shutil, time, json
 
 def download(mapservice_layer_url, CHUNK_SIZE=50, OFFSET=0):
     """ Download MapService layer as chunks of separated EsriJSON file(s).
@@ -19,36 +19,36 @@ def download(mapservice_layer_url, CHUNK_SIZE=50, OFFSET=0):
         "returnIdsOnly": "true",
         "f": "json"
     }
-    print "Requesting Ids.."
+    print("Requesting Ids..")
     r = requests.post(mapservice_layer_url, params=params)
 
     ids = r.json()["objectIds"]
     ids.sort()
-    print "Features length: "+ str(len(ids))
+    print("Features length: "+ str(len(ids)))
     i = OFFSET
 
     try:
         shutil.rmtree(outname)
     except:
         pass
-    print "Creating directory: "+outname
+    print("Creating directory: "+outname)
     os.makedirs(outname)
 
-    print "Download chunks of features with CHUNK_SIZE = "+str(CHUNK_SIZE)
+    print("Download chunks of features with CHUNK_SIZE = "+str(CHUNK_SIZE))
     while i <= int(len(ids)/CHUNK_SIZE):
         try:
-            print "Processing "+str(i+1)+"/"+str(int(len(ids)/CHUNK_SIZE)+1)+" chunks"
+            print("Processing "+str(i+1)+"/"+str(int(len(ids)/CHUNK_SIZE)+1)+" chunks")
             subIds = ids[i*CHUNK_SIZE:(i+1)*CHUNK_SIZE]
             chunkIds = ",".join(map(str, subIds))
             with open(outname+"/"+outname+"_"+str(i)+".json", "w") as f:
                 result = getFeaturesByIds(mapservice_layer_url, chunkIds)
-                f.write(result)
+                f.write(result.decode('UTF-8'))
             i+=1
         except Exception as e:
             print("Exception.. retrying in 30 seconds.."+str(e))
             #raise Exception(e)
             time.sleep(30)
-    print "DONE."
+    print("DONE.")
 
 def getFeaturesByIds(url, ids):
     """ Get chunks of features """
@@ -68,9 +68,5 @@ if __name__ == "__main__":
     elif len(sys.argv) > 1:
         download(sys.argv[1])
     else:
-        print "Usage: \n    python downloader.py [Map Service Layer URL] [Chunk size]\n    Chunk size -> feature downloaded on each request."
+        print("Usage: \n    python downloader.py [Map Service Layer URL] [Chunk size]\n    Chunk size -> feature downloaded on each request.")
         exit()
-
-
-
-
